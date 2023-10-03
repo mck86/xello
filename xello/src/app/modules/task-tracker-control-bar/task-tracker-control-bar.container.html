@@ -1,0 +1,22 @@
+<div class="navbar navbar-expand-lg bg-body-tertiary sticky-top">
+  <div class="container-fluid">
+    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+      <div class="navbar-nav">
+        <a class="nav-link link-underline" href="#" (click)="addTask()">Add Task</a>
+        <a class="nav-link link-underline" href="#" (click)="test()">Update Task (1)</a>
+        <a class="nav-link link-underline" href="#">Remove Task (1)</a>
+        <a class="nav-link link-underline" href="#" (click)="addBatch()">Add Batch Tasks (1000)</a>
+      </div>
+    </div>
+    <form class="d-flex" role="search">
+      <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+      <button class="btn btn-outline-success" type="submit">Search</button>
+    </form>
+  </div>
+</div>
+<ng-container *ngIf="showAddTaskPanel$ | async as showAddTaskPanel">
+  <ng-container *ngIf="showAddTaskPanel.props.show">
+    <ng-template #taskTrackerControlbarAddTaskPanelContainerWrapper></ng-template>
+    <ng-container *ngIf="loadTaskTrackerControlbarAddTaskPanelContainer$ | async"></ng-container>
+  </ng-container>
+</ng-container>
