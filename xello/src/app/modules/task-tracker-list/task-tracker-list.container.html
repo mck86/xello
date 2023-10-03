@@ -1,40 +1,55 @@
-<ng-container *ngIf="taskList$ | async as taskList">
-  <div *ngFor="let task of taskList" class="row bg-body-secondary list-item" (click)="editTask(task)">
-    <div class="col-1 p-2 d-flex align-items-center">
-      <div class="form-check">
-        <input class="form-check-input" type="checkbox" value="">
-      </div>
-    </div>
-    <div class="col-2 p-2">
-      {{ task.id }}
-    </div>
-    <div class="col-4 p-2">
-      {{ task.title }}
-    </div>
-    <div class="col-5 p-2">
-      {{ task.description }}
-    </div>
-  </div>
-  <div *ngIf="taskList.length === 0" class="row bg-body-secondary list-item">
-    <div class="col p-2">
-      No tasks found
-    </div>
-  </div>
-</ng-container>
 
-<!--<div class="row bg-dark-subtle list-item">-->
-<!--  <div class="col-1 p-2 d-flex align-items-center">-->
-<!--    <div class="form-check">-->
-<!--      <input class="form-check-input" type="checkbox" value="">-->
+  <ng-container [formGroup]="taskListFormGroup">
+    <ng-container [formArrayName]="'tasks'">
+        <ng-container *ngIf="{ data: editModeIds$ | async } as editModeIds">
+            {{ editModeIds | json }}
+            <div *ngFor="let task of tasks.controls; let i = index; trackBy getTaskId" class="row bg-body-secondary list-item" (click)="editTask(i, editModeIds?.data?.props )">
+
+                <ng-container *ngIf="!editModeIds?.data?.props[i]; else editMode">
+                    <div class="col-1 p-2 d-flex align-items-center">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="">
+                        </div>
+                    </div>
+                    <div class="col-2 p-2">
+                        {{ $any(task).controls['id'].value }}
+                    </div>
+                    <div class="col-4 p-2">
+                        {{ $any(task).controls['title'].value }}
+                    </div>
+                    <div class="col-5 p-2">
+                        {{ $any(task).controls['description'].value }}
+                    </div>
+                </ng-container>
+
+                <ng-template #editMode>
+                    <div class="row bg-dark-subtle list-item">
+                      <div class="col-1 p-2 d-flex align-items-center">
+                        <div class="form-check">
+                          <input class="form-check-input" type="checkbox" value="">
+                        </div>
+                      </div>
+                      <div class="col-2 p-2 d-flex align-items-center">
+                        <input type="text" class="form-control" disabled>
+                      </div>
+                      <div class="col-4 p-2 d-flex align-items-center">
+                        <input type="text" class="form-control">
+                      </div>
+                      <div class="col-5 p-2 d-flex align-items-center">
+                        <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                      </div>
+                    </div>
+                </ng-template>
+
+            </div>
+        </ng-container>
+    </ng-container>
+  </ng-container>
+<!--  <div *ngIf="taskList.length === 0" class="row bg-body-secondary list-item">-->
+<!--    <div class="col p-2">-->
+<!--      No tasks found-->
 <!--    </div>-->
 <!--  </div>-->
-<!--  <div class="col-2 p-2 d-flex align-items-center">-->
-<!--    <input type="text" class="form-control" disabled>-->
-<!--  </div>-->
-<!--  <div class="col-4 p-2 d-flex align-items-center">-->
-<!--    <input type="text" class="form-control">-->
-<!--  </div>-->
-<!--  <div class="col-5 p-2 d-flex align-items-center">-->
-<!--    <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>-->
-<!--  </div>-->
-<!--</div>-->
+
+
+

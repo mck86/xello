@@ -26,7 +26,7 @@ export class ActivityManagerStore extends ComponentStore<ActivityManagerState> {
 
   selectActivityById$<P>(id: string): Observable<Activity<P>> {
     return this.select(state => {
-      const entities = selectEntities(state);
+      const entities = state.entities;
       return entities[id];
     });
   }

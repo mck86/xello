@@ -4,3 +4,6 @@ export interface Activity<P = {}> {
 }
 
 export interface ShowAddTaskPanelProp { show: boolean }
+export interface TaskEditMode {
+    [key:number]: number
+}

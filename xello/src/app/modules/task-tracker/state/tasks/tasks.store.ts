@@ -9,7 +9,7 @@ export interface TasksStateInterface extends EntityState<TaskInterface> {}
 const taskAdapter = createEntityAdapter<TaskInterface>();
 const initialState = taskAdapter.getInitialState();
 
-const { selectAll } = taskAdapter.getSelectors();
+const { selectAll, selectEntities } = taskAdapter.getSelectors();
 
 @Injectable({ providedIn: 'root' })
 export class TasksStore extends ComponentStore<TasksStateInterface> {
@@ -57,4 +57,5 @@ export class TasksStore extends ComponentStore<TasksStateInterface> {
 
   selectTaskState$: Observable<TasksStateInterface> = this.select(state => state);
   selectTaskList$: Observable<TaskInterface[]> = this.select(state => selectAll(state))
+  selectTaskMap$: Observable<Dictionary<TaskInterface>> = this.select(state => selectEntities(state))
 }
